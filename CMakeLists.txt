@@ -7,6 +7,7 @@ project (libjuice
 option(USE_NETTLE "Use Nettle instead of OpenSSL for HMAC computation" OFF)
 option(NO_TESTS "Disable tests build" OFF)
 option(WARNINGS_AS_ERRORS "Treat warnings as errors" OFF)
+option(DISBALE_IP6 "Disable IPv6 support" OFF)
 if(MSVC)
 	option(NO_ATOMICS "Force disabling C11 atomics" ON)
 else()
@@ -91,6 +92,11 @@ if (NO_ATOMICS)
 	target_compile_definitions(juice-static PRIVATE NO_ATOMICS)
 endif()
 
+if (DISBALE_IP6)
+	target_compile_definitions(juice PRIVATE DISBALE_IP6)
+	target_compile_definitions(juice-static PRIVATE DISBALE_IP6)
+endif()
+
 if(APPLE)
 	# This seems to be necessary on MacOS
 	target_include_directories(juice PRIVATE /usr/local/include)
@@ -127,4 +133,3 @@ if(NOT NO_TESTS)
 	set_target_properties(juice-tests PROPERTIES OUTPUT_NAME tests)
 	target_link_libraries(juice-tests juice)
 endif()
-
