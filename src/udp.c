@@ -66,8 +66,8 @@ socket_t udp_create_socket(const udp_socket_config_t *config) {
 
 	// Prefer IPv6
 	struct addrinfo *ai;
-	if ((ai = find_family(ai_list, AF_INET6)) == NULL &&
-	    (ai = find_family(ai_list, AF_INET)) == NULL) {
+	if ((ai = find_family(ai_list, AF_INET)) == NULL &&
+	    (ai = find_family(ai_list, AF_INET6)) == NULL) {
 		JLOG_ERROR("getaddrinfo for binding address failed: no suitable "
 		           "address family");
 		goto error;
